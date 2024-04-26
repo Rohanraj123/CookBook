@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CookBook</string>
+    <string name="api_key">e0157e0d0d574cefb354163aff9f9056</string>
+
+    // Home screen
+    <string name="header_text1">Hello, </string>
+    <string name="header_text2">Which Indian food would</string>
+    <string name="header_text3">you like to cook?</string>
+    <string name="search_bar_placeholder">Search for best Indian cuisine</string>
+</resources>
