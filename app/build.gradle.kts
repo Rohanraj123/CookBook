@@ -76,7 +76,6 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson.converter)
-    implementation(libs.okhttp3)
 
     // Compose dependencies
     implementation(libs.viewmodel.compose)

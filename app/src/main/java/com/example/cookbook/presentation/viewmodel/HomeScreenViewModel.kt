@@ -1,11 +1,8 @@
 package com.example.cookbook.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cookbook.data.models.randomrecipemodel.RandomRecipeResponse
 import com.example.cookbook.data.models.randomrecipemodel.Recipe
 import com.example.cookbook.data.reposiitory.RandomRecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.Callback
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,11 +25,12 @@ class HomeScreenViewModel @Inject constructor(
     val popularItems: StateFlow<List<Recipe>>
         get() = _popularItems
 
-    fun getRandomRecipe(apiKey: String, number: Int) {
+    fun getRandomRecipe(apiKey: String) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val result = randomRecipeRepository.getRandomRecipe(apiKey, number)
+                val result = randomRecipeRepository.getRandomRecipe(apiKey)
+                Log.d("HomeScreenViewModel", "getRandomRecipe of repository is being called with apiKey : $apiKey")
                 if (result.isSuccess) {
                     val recipes = result.getOrNull()?.recipes ?: emptyList()
                     _popularItems.value = recipes

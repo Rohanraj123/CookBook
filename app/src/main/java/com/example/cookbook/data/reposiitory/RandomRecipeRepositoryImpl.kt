@@ -2,21 +2,20 @@ package com.example.cookbook.data.reposiitory
 
 import com.example.cookbook.data.datasource.api.RetrofitApi
 import com.example.cookbook.data.models.randomrecipemodel.RandomRecipeResponse
-import com.example.cookbook.data.models.randomrecipemodel.Recipe
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.await
 import retrofit2.awaitResponse
-import java.io.IOException
 
 class RandomRecipeRepositoryImpl(
     private val retrofitApi: RetrofitApi
 ) : RandomRecipeRepository {
-    override suspend fun getRandomRecipe(apiKey: String, number: Int): Result<RandomRecipeResponse> {
+    /*
+    override suspend fun getRandomRecipe(apiKey: String): Result<RandomRecipeResponse> {
         return try {
-            val response = retrofitApi.getRandomRecipe(apiKey, number).awaitResponse()
+            val response = retrofitApi.getRandomRecipe(apiKey).awaitResponse()
+            Log.d("RepoImpl", "getRandomRecipe is called of retrofitApi")
+            Log.d("RepoImpl", "Request Parameters: apiKey - $apiKey")
+            Log.d("RepoImpl", "response : ${response.body()}")
             if (response.isSuccessful) {
+                Log.d("ResponseStatus", "response status is : ${response.message()}")
                 val data = response.body()
                 if (data != null) {
                     Result.success(data)
@@ -27,7 +26,33 @@ class RandomRecipeRepositoryImpl(
                 Result.failure(Exception("Failed to fetch the network data with status code: ${response.code()}"))
             }
         } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("RandomRecipeRepository", "Exception occurred: ${e.message}")
             Result.failure(e)
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            Log.e("RandomRecipeRepository", "Exception occurred: ${ioException.message}")
+            Result.failure(ioException)
+        } catch (httpException: HttpException) {
+            httpException.printStackTrace()
+            Log.e("RandomRecipeRepository", "Exception occurred: ${httpException.message}")
+            Result.failure(httpException)
         }
     }
+
+     */
+    override suspend fun getRandomRecipe(apiKey: String): Result<RandomRecipeResponse> {
+        return try {
+            val response = retrofitApi.getRandomRecipe(apiKey).awaitResponse() // Await the asynchronous response
+            if (response.isSuccessful) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Failed to fetch recipe (code: ${response.code()})")) // Include error code
+            }
+        } catch (e: Exception) {
+            Result.failure(e) // Handle other exceptions
+        }
+    }
+
+
 }
