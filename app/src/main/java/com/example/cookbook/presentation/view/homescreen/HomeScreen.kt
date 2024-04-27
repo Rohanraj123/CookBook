@@ -64,7 +64,7 @@ fun HomeScreen(
 
     val apiKey = stringResource(id = R.string.api_key)
     LaunchedEffect(key1 = Unit) {
-        homeScreenViewModel.getRandomRecipe(apiKey = apiKey)
+        homeScreenViewModel.getRandomRecipe(apiKey = apiKey, number = 20)
         Log.d("HomeScreen", "Calling the viewmodel getRandomRecipe with apiKey : $apiKey")
     }
 }

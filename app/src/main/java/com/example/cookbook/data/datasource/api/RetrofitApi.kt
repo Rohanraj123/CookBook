@@ -18,6 +18,7 @@ interface RetrofitApi {
      */
     @GET("random")
     fun getRandomRecipe(
-        @Query("api_key") apiKey: String
+        @Query("apiKey") apiKey: String,
+        @Query("number") number: Int
     ): Call<RandomRecipeResponse>
 }
