@@ -21,7 +21,7 @@ import com.example.cookbook.ui.theme.ButtonColor
 
 @Composable
 fun HeaderText(
-    name: String
+    name: String?
 ) {
     Column(
         modifier = Modifier
@@ -37,12 +37,14 @@ fun HeaderText(
                 fontSize = 30.sp
             )
             Spacer(modifier = Modifier.width(12.dp))
-            Text(
-                text = name,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 30.sp,
-                color = ButtonColor
-            )
+            if (name != null) {
+                Text(
+                    text = name,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 30.sp,
+                    color = ButtonColor
+                )
+            }
         }
         Text(
             text = stringResource(id = R.string.header_text2),

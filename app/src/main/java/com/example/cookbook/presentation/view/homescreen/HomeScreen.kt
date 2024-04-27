@@ -2,6 +2,7 @@ package com.example.cookbook.presentation.view.homescreen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,44 +21,44 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavBackStackEntry
 import com.example.cookbook.R
 import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
+import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    homeScreenViewModel: HomeScreenViewModel
+    homeScreenViewModel: HomeScreenViewModel,
+    recipeDetailScreenViewModel: RecipeDetailScreenViewModel,
+    backStackEntry: NavBackStackEntry
 ) {
     val isLoading by homeScreenViewModel.isLoading.collectAsState(initial = false)
-    Log.d("HomeScreen", "isLoading status : $isLoading")
     val popularItems by homeScreenViewModel.popularItems.collectAsState(emptyList())
-    Log.d("HomeScreen", "list of recipes : $popularItems")
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HeaderText(name = "Rohan")
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Recipes",
-            modifier = Modifier.padding(horizontal = 30.dp),
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
+    val name = backStackEntry.arguments?.getString("name")
 
-        if (isLoading) {
-            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-        } else {
-            if (popularItems.isNotEmpty()) {
-                PopularItems(popularItems = popularItems)
+    Box(modifier = Modifier.fillMaxSize()) {
+            if (isLoading) {
+                CircularProgressIndicator(modifier = Modifier.padding(16.dp).align(Alignment.Center))
             } else {
-                Text(
-                    text = "No recipes found",
-                    modifier = Modifier.padding(horizontal = 30.dp),
-                    fontSize = 16.sp
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                if (popularItems.isNotEmpty()) {
+                    PopularItems(
+                        popularItems = popularItems,
+                        recipeDetailScreenViewModel,
+                        navController,
+                        name
+                    )
+                } else {
+                    Text(
+                        text = "No recipes found",
+                        modifier = Modifier.padding(horizontal = 30.dp),
+                        fontSize = 16.sp
+                    )
+                }
             }
         }
     }
@@ -65,6 +66,5 @@ fun HomeScreen(
     val apiKey = stringResource(id = R.string.api_key)
     LaunchedEffect(key1 = Unit) {
         homeScreenViewModel.getRandomRecipe(apiKey = apiKey, number = 20)
-        Log.d("HomeScreen", "Calling the viewmodel getRandomRecipe with apiKey : $apiKey")
     }
 }

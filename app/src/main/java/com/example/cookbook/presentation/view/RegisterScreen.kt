@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import com.example.cookbook.presentation.view.components.CustomButton
 import com.example.cookbook.presentation.view.components.CustomTextField
@@ -31,7 +32,8 @@ import com.example.cookbook.ui.theme.ButtonColor
 @Composable
 fun RegisterScreen(
     registerScreenViewModel: RegisterScreenViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    backStackEntry: NavBackStackEntry
 ) {
     val context = LocalContext.current
 
@@ -46,7 +48,7 @@ fun RegisterScreen(
         val observer = Observer<RegistrationResult> { result ->
             when(result) {
                 is RegistrationResult.Success -> {
-                    navController.navigate("HomeScreen")
+                    navController.navigate("HomeScreen/${name}")
                 }
                 is RegistrationResult.Failure -> {
                     Toast.makeText(context, result.errorMessage, Toast.LENGTH_LONG).show()
