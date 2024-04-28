@@ -12,7 +12,8 @@ class RandomRecipeRepositoryImpl(
     override suspend fun getRandomRecipe(apiKey: String, number: Int):
             Result<RandomRecipeResponse> {
         return try {
-            val response = retrofitApi.getRandomRecipe(apiKey, number)
+            val response = retrofitApi
+                .getRandomRecipe(apiKey, number)
                 .awaitResponse()
 
             if (response.isSuccessful) {

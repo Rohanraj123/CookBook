@@ -25,6 +25,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -36,6 +38,9 @@ import com.example.cookbook.presentation.view.recipedetailsscreen.ScrollContent
 import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
 import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel
 import com.example.cookbook.ui.theme.ButtonColor
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,12 +50,16 @@ fun HomeScreen(
     recipeDetailScreenViewModel: RecipeDetailScreenViewModel,
     backStackEntry: NavBackStackEntry
 ) {
+    val apiKey = stringResource(id = R.string.api_key)
+
     val isLoading by homeScreenViewModel.isLoading.collectAsState(initial = false)
     val popularItems by homeScreenViewModel.popularItems.collectAsState(emptyList())
-
+    var isDrawerOpen by remember { mutableStateOf(false)}
+    val pullRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+    var isInitialFetchedCompleted by rememberSaveable { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
     val name = backStackEntry.arguments?.getString("name")
 
-    var isDrawerOpen by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -74,12 +83,27 @@ fun HomeScreen(
             )
         },
     ) { innerPadding ->
+        SwipeRefresh(
+            state = pullRefreshState,
+            onRefresh = {
+                scope.launch {
+                    homeScreenViewModel
+                        .getRandomRecipe(
+                            apiKey = apiKey,
+                            number = 20
+                        )
+                }
+            }
+        ) {
+
         ScrollContent(padding = innerPadding)
         Box(modifier = Modifier.fillMaxSize()) {
             if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.Center)
+                )
             } else {
                 Column(
                     modifier = Modifier
@@ -113,10 +137,13 @@ fun HomeScreen(
                 }
             }
         }
+        }
     }
 
-    val apiKey = stringResource(id = R.string.api_key)
-    LaunchedEffect(key1 = Unit) {
-        homeScreenViewModel.getRandomRecipe(apiKey = apiKey, number = 20)
+    if (!isInitialFetchedCompleted) {
+        LaunchedEffect(Unit) {
+            homeScreenViewModel.getRandomRecipe(apiKey = apiKey, number = 20)
+            isInitialFetchedCompleted = true
+        }
     }
 }

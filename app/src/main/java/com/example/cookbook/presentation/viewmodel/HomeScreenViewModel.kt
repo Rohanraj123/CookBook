@@ -24,6 +24,7 @@ class HomeScreenViewModel @Inject constructor(
     val popularItems: StateFlow<List<Recipe>>
         get() = _popularItems
 
+
     fun getRandomRecipe(apiKey: String, number: Int) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,11 +33,7 @@ class HomeScreenViewModel @Inject constructor(
                 if (result.isSuccess) {
                     val recipes = result.getOrNull()?.recipes ?: emptyList()
                     _popularItems.value = recipes
-                } else {
-                    // Handle error (you can expose this via another state or event)
                 }
-            } catch (e: Exception) {
-                // Handle network or other errors
             } finally {
                 _isLoading.value = false
             }

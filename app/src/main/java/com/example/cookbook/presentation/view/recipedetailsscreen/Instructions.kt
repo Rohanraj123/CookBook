@@ -18,7 +18,11 @@ import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel
 fun Instructions(
     recipeDetailScreenViewModel: RecipeDetailScreenViewModel
 ) {
-    val selectedRecipe = recipeDetailScreenViewModel.selectedRecipe.collectAsState().value
+    val selectedRecipe = recipeDetailScreenViewModel
+        .selectedRecipe
+        .collectAsState()
+        .value
+
 
     Column(
         modifier = Modifier.padding(20.dp)
@@ -33,5 +37,21 @@ fun Instructions(
             text = selectedRecipe?.instructions.toString(),
             color = Color.Gray
         )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Steps",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold
+        )
+        val analyzedInstructions = selectedRecipe?.analyzedInstructions
+        analyzedInstructions?.forEach { analyzedInstruction ->
+            val steps = analyzedInstruction.steps
+            steps.forEach { step ->
+                Text(
+                    text = step.step,
+                    color = Color.Gray
+                )
+            }
+        }
     }
 }

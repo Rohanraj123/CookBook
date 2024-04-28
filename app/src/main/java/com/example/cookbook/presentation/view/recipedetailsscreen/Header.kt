@@ -1,6 +1,5 @@
 package com.example.cookbook.presentation.view.recipedetailsscreen
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +16,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,21 +33,26 @@ fun Header(
     recipeDetailsScreenViewModel: RecipeDetailScreenViewModel,
     onBackClick: () -> Unit
 ) {
-    val selectedRecipe = recipeDetailsScreenViewModel.selectedRecipe.collectAsState().value
+    val selectedRecipe =
+        recipeDetailsScreenViewModel
+            .selectedRecipe
+            .collectAsState()
+            .value
 
     Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                                 IconButton(onClick = { onBackClick() }) {
-                                     androidx.compose.material3.Icon(
-                                         Icons.Default.ArrowBack,
-                                         contentDescription = null
-                                     )
-                                 }
+                    IconButton(onClick = { onBackClick() }) {
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
                 },
                 title = { Text(text = "Details") },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults
+                    .topAppBarColors(
                     containerColor = ButtonColor,
                     titleContentColor = Color.White
                 )
@@ -67,11 +70,9 @@ fun Header(
                 Name(recipeDetailsScreenViewModel)
                 ImageViewer(recipeDetailsScreenViewModel)
                 Informations(recipeDetailsScreenViewModel)
+                Ingredients(selectedRecipe = selectedRecipe)
                 Instructions(recipeDetailsScreenViewModel)
             }
-        } else {
-            // Show loading indicator while fetching data
-            Text("Loading recipe details...")
         }
     }
 }

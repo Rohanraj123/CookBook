@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.cookbook.ui.theme.ButtonColor
 
-
 @Composable
 fun CustomButton(
     onClick: () -> Unit,

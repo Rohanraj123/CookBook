@@ -1,6 +1,5 @@
 package com.example.cookbook.presentation.view
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -39,7 +38,15 @@ fun LogInScreen(
     var password by remember { mutableStateOf("") }
     var passwordLengthError by remember { mutableStateOf("") }
     val preferenceManager = remember { PreferenceManager(context) }
-    var loggedIn by remember { mutableStateOf( preferenceManager.getBoolean("loggedIn", false))}
+    var loggedIn by remember {
+        mutableStateOf(
+            preferenceManager
+                .getBoolean(
+                    "loggedIn",
+                    false
+                )
+        )
+    }
     
     DisposableEffect(Unit) {
         val observer = Observer<LogInResult> { logInResult ->
@@ -94,7 +101,7 @@ fun LogInScreen(
             value = password,
             onValueChange = {
                 password = it
-                passwordLengthError = if (password.length < 6) "Password should atleast be of 6 characters" else ""
+                passwordLengthError = if (password.length < 6) "Password should at least be of 6 characters" else ""
                             },
             placeHolder = "Password",
             keyboardType = KeyboardType.Password
