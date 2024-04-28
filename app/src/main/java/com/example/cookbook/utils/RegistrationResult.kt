@@ -1,4 +1,4 @@
-package com.example.cookbook.presentation.utils
+package com.example.cookbook.utils
 
 sealed class RegistrationResult {
     object Success: RegistrationResult()

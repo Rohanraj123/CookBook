@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
-import com.example.cookbook.presentation.utils.LogInResult
-import com.example.cookbook.presentation.utils.PreferenceManager
+import com.example.cookbook.utils.LogInResult
+import com.example.cookbook.utils.PreferenceManager
 import com.example.cookbook.presentation.view.components.CustomButton
 import com.example.cookbook.presentation.view.components.CustomTextField
 import com.example.cookbook.presentation.viewmodel.LogInScreenViewModel

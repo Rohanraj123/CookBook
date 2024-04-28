@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.cookbook.presentation.utils.PreferenceManager
+import com.example.cookbook.utils.PreferenceManager
 import com.example.cookbook.presentation.view.homescreen.HomeScreen
 import com.example.cookbook.presentation.view.LogInScreen
 import com.example.cookbook.presentation.view.RegisterScreen

@@ -1,6 +1,8 @@
 package com.example.cookbook.data.models.randomrecipemodel
 
+import com.google.gson.annotations.SerializedName
+
 data class Length(
-    val number : Int,
-    val unit   : String
+    @SerializedName("number" ) val number : Int,
+    @SerializedName("unit"   ) val unit   : String
 )

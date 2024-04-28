@@ -1,4 +1,4 @@
-package com.example.cookbook.presentation.utils
+package com.example.cookbook.utils
 
 import com.example.cookbook.data.models.randomrecipemodel.RandomRecipeResponse
 

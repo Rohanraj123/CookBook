@@ -1,4 +1,4 @@
-package com.example.cookbook.presentation.utils
+package com.example.cookbook.utils
 
 import android.content.Context
 import android.content.SharedPreferences

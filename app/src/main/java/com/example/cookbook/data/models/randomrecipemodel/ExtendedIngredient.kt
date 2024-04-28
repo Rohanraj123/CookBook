@@ -1,16 +1,18 @@
 package com.example.cookbook.data.models.randomrecipemodel
 
+import com.google.gson.annotations.SerializedName
+
 data class ExtendedIngredient(
-    val aisle        : String,
-    val amount       : Double,
-    val consistency  : String,
-    val id           : Int,
-    val image        : String,
-    val measures     : Measures,
-    val meta         : List<String>,
-    val name         : String,
-    val nameClean    : String,
-    val original     : String,
-    val originalName : String,
-    val unit         : String
+    @SerializedName("aisle"        ) val aisle        : String,
+    @SerializedName("amount"       ) val amount       : Double,
+    @SerializedName("consistency"  ) val consistency  : String,
+    @SerializedName("id"           ) val id           : Int,
+    @SerializedName("image"        ) val image        : String,
+    @SerializedName("measures"     ) val measures     : Measures,
+    @SerializedName("meta"         ) val meta         : List<String>,
+    @SerializedName("name"         ) val name         : String,
+    @SerializedName("nameClean"    ) val nameClean    : String,
+    @SerializedName("original"     ) val original     : String,
+    @SerializedName("originalName" ) val originalName : String,
+    @SerializedName("unit"         ) val unit         : String
 )
