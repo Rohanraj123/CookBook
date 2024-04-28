@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipeDetailScreenViewModel @Inject constructor(
-    val randomRecipeRepository: RandomRecipeRepository
 ): ViewModel() {
 
     private val _selectedRecipe = MutableStateFlow<Recipe?>(null)
@@ -20,5 +19,4 @@ class RecipeDetailScreenViewModel @Inject constructor(
     fun setRecipe(recipe: Recipe) {
         _selectedRecipe.value = recipe
     }
-
 }

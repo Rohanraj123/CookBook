@@ -1,9 +1,7 @@
 package com.example.cookbook.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cookbook.data.datasource.api.GetRandomRecipeResult
 import com.example.cookbook.data.models.randomrecipemodel.Recipe
 import com.example.cookbook.data.reposiitory.RandomRecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

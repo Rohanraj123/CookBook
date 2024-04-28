@@ -1,6 +1,5 @@
 package com.example.cookbook.data.reposiitory
 
-import com.example.cookbook.data.datasource.api.GetRandomRecipeResult
 import com.example.cookbook.data.datasource.api.RetrofitApi
 import com.example.cookbook.data.models.randomrecipemodel.RandomRecipeResponse
 import retrofit2.HttpException

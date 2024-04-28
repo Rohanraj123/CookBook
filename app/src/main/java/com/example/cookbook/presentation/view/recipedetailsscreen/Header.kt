@@ -99,5 +99,4 @@ fun Name(recipeDetailsScreenViewModel: RecipeDetailScreenViewModel) {
             color = Color.Gray
         )
     }
-
 }

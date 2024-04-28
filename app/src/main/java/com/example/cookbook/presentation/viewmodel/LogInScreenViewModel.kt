@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.cookbook.presentation.utils.LogInResult
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -36,15 +37,9 @@ class LogInScreenViewModel @Inject constructor(
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _logInResult.value = LogInResult.Success
-                    Log.d("LogInScreenViewModel", "_logInResult : $_logInResult")
                 } else {
                     _logInResult.value = LogInResult.Failure("Sign In Failed ")
                 }
             }
     }
-}
-
-sealed class LogInResult {
-    object Success: LogInResult()
-    data class Failure(val errorMessage: String): LogInResult()
 }

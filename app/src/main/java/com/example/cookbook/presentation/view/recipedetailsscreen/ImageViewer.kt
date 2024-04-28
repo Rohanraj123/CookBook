@@ -37,5 +37,4 @@ fun ImageViewer(
             contentScale = ContentScale.Crop
         )
     }
-
 }

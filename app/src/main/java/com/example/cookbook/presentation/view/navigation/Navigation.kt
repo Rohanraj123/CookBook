@@ -35,7 +35,7 @@ fun Navigation(
 
     NavHost(
         navController = navController,
-        startDestination = if (loggedIn) "HomeScreen" else "logInScreen"
+        startDestination = if (loggedIn) "HomeScreen/{name}" else "logInScreen"
     ) {
         composable("logInScreen") {
             LogInScreen(logInScreenViewModel, navController)
@@ -43,7 +43,7 @@ fun Navigation(
         composable("RegisterScreen/{name}") {backStackEntry ->
             RegisterScreen(registerScreenViewModel, navController, backStackEntry)
         }
-        composable("HomeScreen") {backStackEntry ->
+        composable("HomeScreen/{name}") {backStackEntry ->
             HomeScreen(navController, homeScreenViewModel, recipeDetailScreenViewModel, backStackEntry)
         }
         composable("RecipeDetailScreen") {backStackEntry ->

@@ -1,6 +1,5 @@
 package com.example.cookbook.di
 
-import android.util.Log
 import com.example.cookbook.data.datasource.api.RetrofitApi
 import com.example.cookbook.data.reposiitory.RandomRecipeRepository
 import com.example.cookbook.data.reposiitory.RandomRecipeRepositoryImpl
@@ -26,8 +25,6 @@ class MainModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         } catch (e: IllegalArgumentException) {
-            // Handle IllegalArgumentException
-            Log.e("MainModule", "Error creating Retrofit instance: ${e.message}")
             throw e
         }
     }
@@ -38,8 +35,6 @@ class MainModule {
         return try {
             retrofit.create(RetrofitApi::class.java)
         } catch (e: IllegalArgumentException) {
-            // Handle IllegalArgumentException
-            Log.e("MainModule", "Error creating RetrofitApi instance: ${e.message}")
             throw e
         }
     }

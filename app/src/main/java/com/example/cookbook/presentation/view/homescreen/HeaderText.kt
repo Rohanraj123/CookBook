@@ -20,32 +20,18 @@ import com.example.cookbook.R
 import com.example.cookbook.ui.theme.ButtonColor
 
 @Composable
-fun HeaderText(
-    name: String?
-) {
+fun HeaderText(name: String?) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(id = R.string.header_text1),
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 30.sp
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            if (name != null) {
-                Text(
-                    text = name,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 30.sp,
-                    color = ButtonColor
-                )
-            }
-        }
+
+        Text(
+            text = stringResource(id = R.string.header_text1),
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 30.sp
+        )
         Text(
             text = stringResource(id = R.string.header_text2),
             color = Color.Gray,
@@ -57,10 +43,4 @@ fun HeaderText(
             fontSize = 20.sp
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewHeaderText() {
-    HeaderText("Rohan")
 }

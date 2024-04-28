@@ -1,6 +1,7 @@
 package com.example.cookbook.presentation.view
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
@@ -21,10 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
+import com.example.cookbook.presentation.utils.LogInResult
 import com.example.cookbook.presentation.utils.PreferenceManager
 import com.example.cookbook.presentation.view.components.CustomButton
 import com.example.cookbook.presentation.view.components.CustomTextField
-import com.example.cookbook.presentation.viewmodel.LogInResult
 import com.example.cookbook.presentation.viewmodel.LogInScreenViewModel
 import com.example.cookbook.ui.theme.ButtonColor
 
@@ -34,17 +35,11 @@ fun LogInScreen(
     navController: NavHostController
 ) {
     val context = LocalContext.current
-
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
     var passwordLengthError by remember { mutableStateOf("") }
-
     val preferenceManager = remember { PreferenceManager(context) }
-    var loggedIn by remember {
-        mutableStateOf( preferenceManager.getBoolean("loggedIn", false))
-    }
-    Log.d("LogInScreen", "loggedIn value : $loggedIn")
+    var loggedIn by remember { mutableStateOf( preferenceManager.getBoolean("loggedIn", false))}
     
     DisposableEffect(Unit) {
         val observer = Observer<LogInResult> { logInResult ->
@@ -52,7 +47,7 @@ fun LogInScreen(
                 is LogInResult.Success -> {
                     loggedIn = true
                     preferenceManager.saveBoolean("loggedIn", true)
-                    navController.navigate("HomeScreen")
+                    navController.navigate("HomeScreen/${email}")
                 }
                 is LogInResult.Failure -> {
                     loggedIn = false
@@ -118,7 +113,11 @@ fun LogInScreen(
 
         CustomButton(
             onClick = {
-                logInScreenViewModel.logInUser(context, email, password)
+                try {
+                    logInScreenViewModel.logInUser(context, email, password)
+                } catch (e : Exception) {
+                    Toast.makeText(context, "Wrong credentials", Toast.LENGTH_LONG).show()
+                }
             },
             text = "Sign In"
         )
@@ -141,7 +140,7 @@ fun LogInScreen(
                 text = "Sign Up",
                 fontWeight = FontWeight.Bold,
                 color = ButtonColor,
-                modifier = Modifier.clickable { navController.navigate("RegisterScreen") }
+                modifier = Modifier.clickable { navController.navigate("RegisterScreen/{name}") }
             )
         }
     }

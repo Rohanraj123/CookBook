@@ -225,7 +225,7 @@ fun Informations(
                 text = selectedRecipe?.sourceUrl.toString(),
                 color = BoxTextColor
             )
+            }
         }
-    }
     }
 }
