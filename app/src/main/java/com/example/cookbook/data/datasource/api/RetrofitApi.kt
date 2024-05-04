@@ -21,4 +21,6 @@ interface RetrofitApi {
         @Query("apiKey") apiKey: String,
         @Query("number") number: Int
     ): Call<RandomRecipeResponse>
+
+    @GET("complexSearch")
 }
