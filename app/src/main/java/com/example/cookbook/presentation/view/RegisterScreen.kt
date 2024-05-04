@@ -3,7 +3,6 @@ package com.example.cookbook.presentation.view
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,17 +20,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import com.example.cookbook.utils.RegistrationResult
 import com.example.cookbook.presentation.view.components.CustomButton
 import com.example.cookbook.presentation.view.components.CustomTextField
 import com.example.cookbook.presentation.viewmodel.RegisterScreenViewModel
-import com.example.cookbook.presentation.viewmodel.RegistrationResult
 import com.example.cookbook.ui.theme.ButtonColor
 
 @Composable
 fun RegisterScreen(
     registerScreenViewModel: RegisterScreenViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    backStackEntry: NavBackStackEntry
 ) {
     val context = LocalContext.current
 
@@ -46,7 +47,7 @@ fun RegisterScreen(
         val observer = Observer<RegistrationResult> { result ->
             when(result) {
                 is RegistrationResult.Success -> {
-                    navController.navigate("HomeScreen")
+                    navController.navigate("HomeScreen/${name}")
                 }
                 is RegistrationResult.Failure -> {
                     Toast.makeText(context, result.errorMessage, Toast.LENGTH_LONG).show()
@@ -136,9 +137,12 @@ fun RegisterScreen(
 
         CustomButton(
             onClick = {
-                if (confirmPassword == password) {
-
-                    registerScreenViewModel.registerUser(context, name, email, password)
+                try {
+                    if (confirmPassword == password) {
+                        registerScreenViewModel.registerUser(context, name, email, password)
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, "Fill all the credentials", Toast.LENGTH_LONG).show()
                 }
             },
             text = "Sign Up"

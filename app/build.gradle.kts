@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.sharedpreferences)
     implementation(libs.lifecycle.compose)
     implementation(libs.runtime.livedata)
+    implementation(libs.swipe.refresh)
 
     // Dagger-hilt
     implementation("com.google.dagger:hilt-android:2.48")

@@ -22,6 +22,7 @@ shared-preferences = "1.1.0"
 lifecycle-compose = "2.7.0"
 runtime-livedata = "1.6.1"
 retrofit-adapter-coroutines = "2.6.0.pom"
+swiperefresh = "0.27.0"
 
 
 
@@ -54,6 +55,7 @@ activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 sharedpreferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref =  "shared-preferences" }
+swipe-refresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "swiperefresh" }
 
 
 [plugins]

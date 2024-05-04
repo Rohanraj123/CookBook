@@ -1,8 +1,8 @@
 package com.example.cookbook.presentation.view.homescreen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,23 +28,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.cookbook.data.models.randomrecipemodel.Recipe
+import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel
 
 @Composable
 fun PopularItems(
-    popularItems: List<Recipe>
+    popularItems: List<Recipe>,
+    recipeDetailScreenViewModel: RecipeDetailScreenViewModel,
+    navController: NavHostController,
+    name: String?
 ) {
     LazyColumn(
         modifier = Modifier.padding(horizontal = 16.dp)
     ){
+        item {HeaderText(name = name)}
+        item {
+            Text(
+                text = "Recipes",
+                modifier = Modifier.padding(horizontal = 30.dp),
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp
+            )
+        }
         items(popularItems) { recipe ->
-            Log.d("PopularItems", "recipe : $recipe")
             DishCard(
                 recipe = recipe,
-                onClick = {/* Handle on click here */}
+                onClick = {
+                    recipeDetailScreenViewModel.setRecipe(recipe)
+                    navController.navigate("RecipeDetailScreen")
+                }
             )
         }
     }
@@ -60,11 +78,12 @@ fun DishCard(
             .fillMaxWidth()
             .padding(horizontal = 4.dp, vertical = 8.dp)
             .background(Color.White, shape = RoundedCornerShape(16.dp))
+            .clickable { onClick() }
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Background image of dish
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -72,30 +91,28 @@ fun DishCard(
                     .clip(RoundedCornerShape(16.dp))
             ) {
                 Image(
-                    painter = rememberImagePainter(recipe.image), // Use Coil or other image loading library
+                    painter = rememberImagePainter(recipe.image),
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             }
 
-            recipe.title?.let {
-                Text(
-                    text = it,
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+            Text(
+                text = recipe.title,
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium
+            )
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
             ) {
-                // Display vegetarian icon if recipe is vegetarian
-                if (recipe.vegetarian == true) {
+
+                if (recipe.vegetarian) {
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = null,
@@ -113,7 +130,6 @@ fun DishCard(
                     Spacer(modifier = Modifier.width(4.dp))
                 }
 
-                // Display time to make
                 Icon(
                     imageVector = Icons.Default.DateRange,
                     contentDescription = null,

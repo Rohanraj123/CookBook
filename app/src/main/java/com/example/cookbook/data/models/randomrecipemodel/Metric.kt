@@ -1,7 +1,9 @@
 package com.example.cookbook.data.models.randomrecipemodel
 
+import com.google.gson.annotations.SerializedName
+
 data class Metric(
-    val amount: Double,
-    val unitLong: String,
-    val unitShort: String
+    @SerializedName("amount"    ) val amount    : Double,
+    @SerializedName("unitLong"  ) val unitLong  : String,
+    @SerializedName("unitShort" ) val unitShort : String
 )

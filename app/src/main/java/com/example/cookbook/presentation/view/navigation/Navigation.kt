@@ -6,12 +6,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.cookbook.presentation.utils.PreferenceManager
+import com.example.cookbook.utils.PreferenceManager
 import com.example.cookbook.presentation.view.homescreen.HomeScreen
 import com.example.cookbook.presentation.view.LogInScreen
 import com.example.cookbook.presentation.view.RegisterScreen
+import com.example.cookbook.presentation.view.recipedetailsscreen.RecipeDetailScreen
 import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
 import com.example.cookbook.presentation.viewmodel.LogInScreenViewModel
+import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel
 import com.example.cookbook.presentation.viewmodel.RegisterScreenViewModel
 
 @Composable
@@ -19,6 +21,7 @@ fun Navigation(
     navController: NavHostController,
     registerScreenViewModel: RegisterScreenViewModel,
     logInScreenViewModel: LogInScreenViewModel,
+    recipeDetailScreenViewModel: RecipeDetailScreenViewModel,
     homeScreenViewModel: HomeScreenViewModel
 ) {
 
@@ -32,16 +35,19 @@ fun Navigation(
 
     NavHost(
         navController = navController,
-        startDestination = if (loggedIn) "HomeScreen" else "logInScreen"
+        startDestination = if (loggedIn) "HomeScreen/{name}" else "logInScreen"
     ) {
         composable("logInScreen") {
             LogInScreen(logInScreenViewModel, navController)
         }
-        composable("RegisterScreen") {
-            RegisterScreen(registerScreenViewModel, navController)
+        composable("RegisterScreen/{name}") {backStackEntry ->
+            RegisterScreen(registerScreenViewModel, navController, backStackEntry)
         }
-        composable("HomeScreen") {
-            HomeScreen(navController, homeScreenViewModel)
+        composable("HomeScreen/{name}") {backStackEntry ->
+            HomeScreen(navController, homeScreenViewModel, recipeDetailScreenViewModel, backStackEntry)
+        }
+        composable("RecipeDetailScreen") {backStackEntry ->
+            RecipeDetailScreen(recipeDetailScreenViewModel, backStackEntry, navController)
         }
     }
 }

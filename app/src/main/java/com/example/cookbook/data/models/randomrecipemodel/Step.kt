@@ -1,9 +1,11 @@
 package com.example.cookbook.data.models.randomrecipemodel
 
+import com.google.gson.annotations.SerializedName
+
 data class Step(
-    val equipment: List<Equipment>,
-    val ingredients: List<Ingredient>,
-    val length: Length,
-    val number: Int,
-    val step: String
+    @SerializedName("equipment"   ) val equipment   : List<Equipment>,
+    @SerializedName("ingredients" ) val ingredients : List<Ingredient>,
+    @SerializedName("length"      ) val length      : Length,
+    @SerializedName("number"      ) val number      : Int,
+    @SerializedName("step"        ) val step        : String
 )

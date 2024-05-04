@@ -1,5 +1,7 @@
 package com.example.cookbook.data.models.randomrecipemodel
 
+import com.google.gson.annotations.SerializedName
+
 data class RandomRecipeResponse(
-    val recipes: List<Recipe>
+    @SerializedName("recipes") val recipes : List<Recipe>
 )

@@ -1,6 +1,8 @@
 package com.example.cookbook.data.models.randomrecipemodel
 
+import com.google.gson.annotations.SerializedName
+
 data class AnalyzedInstruction(
-    val name: String,
-    val steps: List<Step>
+    @SerializedName("name")  val name  : String,
+    @SerializedName("steps") val steps : List<Step>
 )
