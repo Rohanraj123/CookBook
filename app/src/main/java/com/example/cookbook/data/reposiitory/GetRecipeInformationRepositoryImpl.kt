@@ -1,31 +1,34 @@
 package com.example.cookbook.data.reposiitory
 
+import android.util.Log
 import com.example.cookbook.data.datasource.api.RetrofitApi
-import com.example.cookbook.data.models.RandomRecipeModel.RandomRecipeResponse
+import com.example.cookbook.data.models.RandomRecipeModel.Recipe
 import retrofit2.HttpException
 import retrofit2.awaitResponse
 import java.io.IOException
 
-class RandomRecipeRepositoryImpl(
+class GetRecipeInformationRepositoryImpl(
     private val retrofitApi: RetrofitApi
-) : RandomRecipeRepository {
-    override suspend fun getRandomRecipe(apiKey: String, number: Int):
-            Result<RandomRecipeResponse> {
+): GetRecipeInformationRepository {
+    override suspend fun getRecipeInformation(id: Int, apiKey: String): Result<Recipe> {
         return try {
-            val response = retrofitApi
-                .getRandomRecipe(apiKey, number)
-                .awaitResponse()
 
+            val response = retrofitApi.getRecipeInformation(id, apiKey).awaitResponse()
             if (response.isSuccessful) {
                 val data = response.body()
+                Log.d("GetRecipeInfoRepoImpl", "response : ${response.body()}")
                 if (data != null) {
                     Result.success(data)
                 } else {
                     Result.failure(Exception("Response body is null"))
                 }
             } else {
-                Result.failure(Exception("Failed to fetch the network " +
-                        "data with status code: ${response.code()}"))
+                Result.failure(
+                    Exception(
+                        "Failed to fetch the network " +
+                                "data with status code: ${response.code()}"
+                    )
+                )
             }
         } catch (e: Exception) {
             e.printStackTrace()

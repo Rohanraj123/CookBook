@@ -1,5 +1,6 @@
-package com.example.cookbook.presentation.view.homescreen
+package com.example.cookbook.presentation.view.HomeScreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import com.example.cookbook.R
 import com.example.cookbook.presentation.view.components.SideNavDrawer
-import com.example.cookbook.presentation.view.recipedetailsscreen.ScrollContent
+import com.example.cookbook.presentation.view.RecipeDetailsScreen.ScrollContent
 import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
 import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel
 import com.example.cookbook.ui.theme.ButtonColor
@@ -54,11 +55,17 @@ fun HomeScreen(
 
     val isLoading by homeScreenViewModel.isLoading.collectAsState(initial = false)
     val popularItems by homeScreenViewModel.popularItems.collectAsState(emptyList())
+    val searchItems = homeScreenViewModel.searchItems.collectAsState(emptyList()).value
+    Log.d("HomeScreen", "Search Items : $searchItems")
+    val searchedRecipe = homeScreenViewModel.searchedRecipe.collectAsState().value
+
     var isDrawerOpen by remember { mutableStateOf(false)}
     val pullRefreshState = rememberSwipeRefreshState(isRefreshing = false)
     var isInitialFetchedCompleted by rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val name = backStackEntry.arguments?.getString("name")
+
+
 
     Scaffold(
         topBar = {
@@ -114,9 +121,11 @@ fun HomeScreen(
                     if (popularItems.isNotEmpty()) {
                         PopularItems(
                             popularItems = popularItems,
+                            searchItems = searchItems,
                             recipeDetailScreenViewModel,
                             navController,
-                            name
+                            name,
+                            homeScreenViewModel
                         )
                     } else {
                         Text(

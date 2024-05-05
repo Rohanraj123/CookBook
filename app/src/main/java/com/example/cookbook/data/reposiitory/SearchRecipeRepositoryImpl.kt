@@ -1,20 +1,18 @@
 package com.example.cookbook.data.reposiitory
 
+import android.util.Log
 import com.example.cookbook.data.datasource.api.RetrofitApi
-import com.example.cookbook.data.models.RandomRecipeModel.RandomRecipeResponse
-import retrofit2.HttpException
+import com.example.cookbook.data.models.SearchRecipe.SearchRecipeResponse
 import retrofit2.awaitResponse
-import java.io.IOException
 
-class RandomRecipeRepositoryImpl(
+class SearchRecipeRepositoryImpl(
     private val retrofitApi: RetrofitApi
-) : RandomRecipeRepository {
-    override suspend fun getRandomRecipe(apiKey: String, number: Int):
-            Result<RandomRecipeResponse> {
+): SearchRecipeRepository {
+    override suspend fun searchRecipe(apiKey: String, query: String)
+    : Result<SearchRecipeResponse> {
         return try {
-            val response = retrofitApi
-                .getRandomRecipe(apiKey, number)
-                .awaitResponse()
+            val response = retrofitApi.searchRecipe(apiKey, query).awaitResponse()
+            Log.d("SearchRecipeRepositoryImpl", "response = ${response.body()}")
 
             if (response.isSuccessful) {
                 val data = response.body()
@@ -23,19 +21,15 @@ class RandomRecipeRepositoryImpl(
                 } else {
                     Result.failure(Exception("Response body is null"))
                 }
-            } else {
+            }
+            else {
                 Result.failure(Exception("Failed to fetch the network " +
                         "data with status code: ${response.code()}"))
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Result.failure(e)
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            Result.failure(ioException)
-        } catch (httpException: HttpException) {
-            httpException.printStackTrace()
-            Result.failure(httpException)
         }
     }
+
 }

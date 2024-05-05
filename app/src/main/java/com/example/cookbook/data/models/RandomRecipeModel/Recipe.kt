@@ -1,6 +1,5 @@
-package com.example.cookbook.data.models.randomrecipemodel
+package com.example.cookbook.data.models.RandomRecipeModel
 
-import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class Recipe(

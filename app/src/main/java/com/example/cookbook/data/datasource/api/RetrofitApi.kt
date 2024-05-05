@@ -1,8 +1,11 @@
 package com.example.cookbook.data.datasource.api
 
-import com.example.cookbook.data.models.randomrecipemodel.RandomRecipeResponse
+import com.example.cookbook.data.models.RandomRecipeModel.RandomRecipeResponse
+import com.example.cookbook.data.models.RandomRecipeModel.Recipe
+import com.example.cookbook.data.models.SearchRecipe.SearchRecipeResponse
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -23,4 +26,14 @@ interface RetrofitApi {
     ): Call<RandomRecipeResponse>
 
     @GET("complexSearch")
+    fun searchRecipe(
+        @Query("apiKey") apiKey: String,
+        @Query("query") query: String
+    ): Call<SearchRecipeResponse>
+
+    @GET("{id}/information")
+    fun getRecipeInformation(
+        @Path("id") id: Int,
+        @Query("apiKey") apiKey: String
+    ): Call<Recipe>
 }

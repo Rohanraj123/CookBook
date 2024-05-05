@@ -1,4 +1,4 @@
-package com.example.cookbook.presentation.view.navigation
+package com.example.cookbook.presentation.view.Navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -7,10 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.cookbook.utils.PreferenceManager
-import com.example.cookbook.presentation.view.homescreen.HomeScreen
+import com.example.cookbook.presentation.view.HomeScreen.HomeScreen
 import com.example.cookbook.presentation.view.LogInScreen
 import com.example.cookbook.presentation.view.RegisterScreen
-import com.example.cookbook.presentation.view.recipedetailsscreen.RecipeDetailScreen
+import com.example.cookbook.presentation.view.RecipeDetailsScreen.RecipeDetailScreen
 import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
 import com.example.cookbook.presentation.viewmodel.LogInScreenViewModel
 import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel

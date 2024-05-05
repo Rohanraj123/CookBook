@@ -1,4 +1,4 @@
-package com.example.cookbook.presentation.view.recipedetailsscreen
+package com.example.cookbook.presentation.view.RecipeDetailsScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
