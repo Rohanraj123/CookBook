@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.cookbook.presentation.view.navigation.Navigation
+import com.example.cookbook.presentation.view.Navigation.Navigation
 import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
 import com.example.cookbook.presentation.viewmodel.LogInScreenViewModel
 import com.example.cookbook.presentation.viewmodel.RecipeDetailScreenViewModel

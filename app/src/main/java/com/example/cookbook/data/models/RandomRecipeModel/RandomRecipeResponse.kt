@@ -1,4 +1,4 @@
-package com.example.cookbook.data.models.randomrecipemodel
+package com.example.cookbook.data.models.RandomRecipeModel
 
 import com.google.gson.annotations.SerializedName
 

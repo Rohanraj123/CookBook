@@ -1,4 +1,4 @@
-package com.example.cookbook.presentation.view.homescreen
+package com.example.cookbook.presentation.view.HomeScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

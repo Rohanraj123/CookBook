@@ -1,5 +1,6 @@
-package com.example.cookbook.presentation.view.homescreen
+package com.example.cookbook.presentation.view.HomeScreen
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,15 +29,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.cookbook.R
+import com.example.cookbook.presentation.viewmodel.HomeScreenViewModel
 
 @Composable
 fun CustomSearchBar(
     navController: NavHostController,
-    onSearch: (String) -> Unit
+    homeScreenViewModel: HomeScreenViewModel
 ) {
+    val apiKey = stringResource(id = R.string.api_key)
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
-
 
     var searchText by remember { mutableStateOf("") }
 
@@ -46,8 +48,7 @@ fun CustomSearchBar(
             .padding(16.dp)
             .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(16.dp))
             .clickable {
-                onSearch(searchText)
-                keyboardController?.hide()
+                       Log.d("CustomSearchBar", "Search Bar is clicked")
             },
         contentAlignment = Alignment.CenterStart
     ) {
@@ -74,8 +75,8 @@ fun CustomSearchBar(
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        keyboardController?.hide()
-                        onSearch(searchText)
+                        homeScreenViewModel.searchRecipe(apiKey, searchText)
+                        Log.d("CustomSearchBar", "searchRecipe method of homeScreenViewModel is called with api: $apiKey, searchText: $searchText")
                     }
                 ),
                 shape = RoundedCornerShape(16.dp)

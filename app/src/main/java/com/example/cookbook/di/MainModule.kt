@@ -1,8 +1,12 @@
 package com.example.cookbook.di
 
 import com.example.cookbook.data.datasource.api.RetrofitApi
+import com.example.cookbook.data.reposiitory.GetRecipeInformationRepository
+import com.example.cookbook.data.reposiitory.GetRecipeInformationRepositoryImpl
 import com.example.cookbook.data.reposiitory.RandomRecipeRepository
 import com.example.cookbook.data.reposiitory.RandomRecipeRepositoryImpl
+import com.example.cookbook.data.reposiitory.SearchRecipeRepository
+import com.example.cookbook.data.reposiitory.SearchRecipeRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,5 +47,17 @@ class MainModule {
     @Singleton
     fun providesRandomRecipeRepository(retrofitAPI: RetrofitApi): RandomRecipeRepository {
         return RandomRecipeRepositoryImpl(retrofitAPI)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSearchRecipeRepository(retrofitAPI: RetrofitApi): SearchRecipeRepository {
+        return SearchRecipeRepositoryImpl(retrofitAPI)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetRecipeInformationRepository(retrofitAPI: RetrofitApi): GetRecipeInformationRepository {
+        return GetRecipeInformationRepositoryImpl(retrofitAPI)
     }
 }
