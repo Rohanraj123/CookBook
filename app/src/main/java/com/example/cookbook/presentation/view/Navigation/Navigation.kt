@@ -47,7 +47,7 @@ fun Navigation(
             HomeScreen(navController, homeScreenViewModel, recipeDetailScreenViewModel, backStackEntry)
         }
         composable("RecipeDetailScreen") {backStackEntry ->
-            RecipeDetailScreen(recipeDetailScreenViewModel, backStackEntry, navController)
+            RecipeDetailScreen(recipeDetailScreenViewModel, navController)
         }
     }
 }
